@@ -49,7 +49,6 @@
             /* margin: -100px -300px; */
             .dostbrand {
                 position: ;
-
                 font-weight: bold;
                 font-size: 1.5rem;
                 /* margin: 0.5rem; */
