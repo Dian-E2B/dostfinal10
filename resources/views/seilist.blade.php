@@ -17,6 +17,8 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <style>
+
+
             .form-control {
                 color: #000000 !important;
             }
@@ -54,7 +56,7 @@
             }
 
             /*
-            body {} */
+        body {} */
 
             .action-column {
                 text-align: center !important;
@@ -70,11 +72,11 @@
 
 
             /*
-            #thisdatatable tbody td:nth-child(23),
-            #thisdatatable thead th:nth-child(23),
-            #thisdatatable tbody th:nth-child(23) {
-                display: none;
-            } */
+        #thisdatatable tbody td:nth-child(23),
+        #thisdatatable thead th:nth-child(23),
+        #thisdatatable tbody th:nth-child(23) {
+        display: none;
+        } */
         </style>
     </head>
 
@@ -105,44 +107,67 @@
                 <main class="content" style="padding:0.5rem 0.5rem 0.5rem; !important;">
                     <div style="background-color: #dddddd" class="container-fluid p-0">
 
-                        <div class="card    ">
+                        <div class="card">
                             <div class="card-body">
 
-                                {{-- DROPDOWN FILTER --}}
+
+
+
                                 <div class="h4">
                                     Science Education Institutes' list of Qualified Scholars
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div class="">
-                                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-filter"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <div style="">
-                                                    <form id="yearForm" method="POST" action="{{ route('seilistviewajax') }}">
-                                                        @csrf
-                                                        <div class="row" style="max-width: 3.9cm; margin: auto;">
-                                                            <select style="" name="startYear" id="" class="form-select">
-                                                                @foreach ($years as $year)
-                                                                    <option style="" value=" {{ $year }}"> {{ $year }} &nbsp;- &nbsp;{{ $year + 1 }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                </div>
-                                                <button class="btn" type="submit">Submit</button>
-                                                </form>
+                                    <div class="col-1"> {{-- DROPDOWN FILTER --}}
+                                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-filter"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <div style="">
+                                                <form id="yearForm" method="POST" action="{{ route('seilistviewajax') }}">
+                                                    @csrf
+                                                    <div class="" style="max-width: 4.9cm; margin: auto;">
+                                                        <select style="" name="startYear" id="" class="form-select">
+                                                            @foreach ($years as $year)
+                                                                <option style="" value=" {{ $year }}"> {{ $year }} &nbsp;- &nbsp;{{ $year + 1 }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                             </div>
+                                            <button class="btn" type="submit">Submit</button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="row" style="font-size: 14px; ">
-                                            <h6 style="margin-left: 300px">Legend:</h6>
-                                            <strong style="text-align: right;"><i class="fas fa-circle" style="color: #194903;"></i><span style="color:#000000">: Qualifier Has been Notified</span></strong>
-                                        </div>
-                                    </div>
+                                    <div class="col-4"> {{-- UPDATE SEI BUTTON --}}
 
+                                        <div>
+                                            <button style="background-color: darkgreen; color:snow; {{ request()->is('seilist') ? '' : 'display:none' }}" id="uploadlist" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Update SEI
+                                            </button>
+
+                                            <form method="POST" enctype="multipart/form-data" action="{{ route('sei.store') }}">
+                                                <ul style=" " class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                    <li style="padding: 0px 10px 0px 10px ;min-width: 50% !important;">
+                                                        @csrf
+                                                        <input class="form-control" type="file" name="excel_file" accept=".xlsx">
+                                                    </li>
+                                                    <div style="padding: 1%"></div>
+                                                    <li style="padding-left: 10px;"><button class="btn btn-primary" type="submit">Import</button></li>
+                                                </ul>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class=" col-5">
+                                        <div class="d-flex justify-content-end"> {{-- EMAIL NOTICE BUTTON --}}
+                                            <a style="{{ request()->is('seilist') || request()->is('emaileditor') ? '' : 'display:none' }}" href="{{ route('sendmail') }}" class="btn btn-primary "> Email Notice to All</a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 mb-2" style="font-size: 14px; ">
+                                        <h6 style="">Legend:</h6>
+                                        <strong style="text-align: right;"><i class="fas fa-circle" style="color: #194903;"></i><span style="color:#000000">: Qualifier Has been Notified</span></strong>
+                                    </div>
                                 </div>
+
 
 
                                 {{-- TABLE --}}

@@ -1,7 +1,30 @@
+<style>
+    .usernameheader {
+        color: white !important;
+    }
+
+    .usernameheader:hover {
+        color: white !important;
+    }
+
+    .hamburger {
+        background: white !important;
+    }
+
+    .hamburger::before {
+        background: white !important;
+    }
+
+    .hamburger::after {
+        background: white !important;
+    }
+</style>
+
 <nav class="navbar navbar-expand navbar-light navbar-bg">
     <a class="sidebar-toggle js-sidebar-toggle">
         <i class="hamburger align-self-center"></i>
     </a>
+
 
     <a style="{{ request()->is('viewdocument*') ? '' : 'display:none' }}; border: 1px solid #ccc;" href="{{ url()->previous() }}" class="btn ">
         <i class="fad fa-long-arrow-left" style="--fa-primary-color: #000000; --fa-secondary-color: #2899a7; --fa-secondary-opacity: 1;"></i>
@@ -10,40 +33,21 @@
 
     <div style="padding-right: 30px"></div>
 
-    <div style="{{ request()->is('seilist') ? 'display:block' : 'display:none' }}" class="btn-group">
-        <button style="background-color: darkgreen; color:snow;" id="uploadlist" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Update SEI
-        </button>
 
-        <form method="POST" enctype="multipart/form-data" action="{{ route('sei.store') }}">
-            <ul style="width: 300px; " class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li style="padding: 0px 10px 0px 10px ;min-width: 50% !important;">
-                    @csrf
-                    <input class="form-control" type="file" name="excel_file" accept=".xlsx">
-                </li>
-                <div style="padding: 1%"></div>
-                <li style="padding-left: 10px;"><button class="btn btn-primary" type="submit">Import</button></li>
-            </ul>
-        </form>
-
-    </div>
 
     <div style="padding-right: 20px"></div>
 
-    <div class="btn">
 
-        <a style="{{ request()->is('seilist') || request()->is('emaileditor') ? 'display:block' : 'display:none' }}" href="{{ route('sendmail') }}" class="btn btn-primary"> Email Notice to All</a>
-    </div>
 
 
     <div class="navbar-collapse collapse">
 
         <section style="text-align: left !important;">
-            <ul class="navbar-nav d-1 d-lg-flex">
+            <ul class="usernameheader navbar-nav d-1 d-lg-flex">
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Resources
+                <li class="usernameheader nav-item dropdown">
+                    <a class="usernameheader nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
                     </a>
                     <div class="dropdown-menu" aria-labelledby="resourcesDropdown">
                         <a class="dropdown-item"><i style="font-size:15px; margin-right:5px" class="fas fa-scroll"></i> Requests</a>
@@ -55,7 +59,7 @@
             </ul>
         </section>
 
-        <ul class="navbar-nav navbar-align">
+        <ul class="usernameheader navbar-nav navbar-align">
             <li class="nav-item dropdown">
                 <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                     {{-- <div class="position-relative">
@@ -200,13 +204,13 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+            <li class="usernameheader nav-item dropdown">
+                <a class="usernameheader nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                     <i class="align-middle" data-feather="settings"></i>
                 </a>
 
-                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                    <span class="text-dark">{{ Auth::user()->username }}</span>
+                <a class="usernameheader nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                    <span class="usernameheader text-dark">{{ Auth::user()->username }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
