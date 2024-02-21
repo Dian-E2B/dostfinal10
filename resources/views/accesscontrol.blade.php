@@ -9,13 +9,11 @@
          <style>
              body {
                  background-color: #dddddd;
-                 
+
                  /*  font-size: 12pt; */
              }
 
-             .sidebar {
-               
-             }
+             .sidebar {}
          </style>
      </head>
 
@@ -133,10 +131,11 @@
                                                  </tr>
                                              @elseif(request()->is('accesscontrolpending'))
                                                  @foreach ($replyslipsandscholarjoinpending as $rasp)
+                                                     {{--    @dd($rasp) --}}
                                                      <tr>
 
-                                                         <td>{{ $rasp->sei_id }}</td>
-                                                         <td>{{ $rasp->program_id }}</td>
+                                                         <td>{{ $rasp->id }}</td>
+                                                         <td>{{ $rasp->year }}</td>
 
                                                          <td>{{ $rasp->lname }},
                                                              {{ $rasp->fname }}
@@ -150,41 +149,14 @@
                                                              {{--  {{ $seisterminated1->gender_id }} --}}
                                                          </td>
                                                          <td class="">{{ $rasp->email }}</td>
-                                                         @if ($rasp->scholar_status_id == 1)
-                                                             {{-- Pending --}}
-                                                             <td style="color:blue">
-                                                                 <strong>Pending</strong>
-                                                             </td>
-                                                         @elseif ($rasp->scholar_status_id == 2)
-                                                             {{-- Ongoing --}}
-                                                             <td style="color:deepskyblue">
-                                                                 <strong>Pending</strong>
-                                                             </td>
-                                                         @elseif ($rasp->scholar_status_id == 3)
-                                                             {{-- Enrolled --}}
-                                                             <td style="color:green">
-                                                                 <strong>Enrolled</strong>
-                                                             </td>
-                                                         @elseif ($rasp->scholar_status_id == 4)
-                                                             {{-- Deferred --}}
-                                                             <td style="color:orange">
-                                                                 <strong>Deferred</strong>
-                                                             </td>
-                                                         @elseif ($rasp->scholar_status_id == 5)
-                                                             {{-- LOA --}}
-                                                             <td style="color:red">
-                                                                 <strong>LOA</strong>
-                                                             </td>
-                                                         @elseif ($rasp->scholar_status_id == 6)
-                                                             {{-- Terminate --}}
-                                                             <td style="color:black">
-                                                                 <strong>Terminate</strong>
-                                                             </td>
-                                                         @endif
+                                                         {{-- Pending --}}
+                                                         <td style="color:blue">
+                                                             <strong>Pending</strong>
+                                                         </td>
                                                          <td class="table-action">
                                                              <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
                                                              <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account"><i class="fas fa-trash"></i></a>
-                                                             <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->sei_id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check" style="color: #006f1c;"></i></a>
+                                                             <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check" style="color: #006f1c;"></i></a>
                                                          </td>
 
                                                      </tr>
