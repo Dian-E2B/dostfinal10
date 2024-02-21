@@ -53,14 +53,6 @@ class EmailSaveController extends Controller
             ]);
 
 
-            //            EmailContent::updateOrcreate(
-            //                ['id' => 1], // Check if a record with this 'id' exists
-            //                [
-            //                    'content' => $emailcontent101, // Set the 'content' attribute to the new value
-            //                    'updated_at' => now(), // Update the 'updated_at' column with the current timestamp
-            //                ]
-            //
-            //            );
 
             $emailContent = EmailContent::find(1); // Find the record with ID 1
             $rowsemail = DB::table('emailcontent')
@@ -74,8 +66,6 @@ class EmailSaveController extends Controller
 
             if ($emailContent) {
 
-                $emailContent->content = $emailcontent101; // Set the 'content' attribute
-                $emailContent->updated_at = now(); // Update the 'updated_at' attribute
                 $emailContent->thisdate = $rowsemail[0]->date;
                 $emailContent->venue = $rowsemail[0]->venue;
                 $emailContent->time = $rowsemail[0]->time;
@@ -100,37 +90,4 @@ class EmailSaveController extends Controller
             return response()->json(['error' => 'Something went wrong'], 500);
         }
     }
-
-    //    public function show()
-    //    {
-    //        $emailcontents = EmailContent::all();
-    //
-    //
-    //        return view('show',compact('emailcontents'));
-    //    }
-
-
-
-    //
-    //    public function storeHTMLContent(Request $request)
-    //    {
-    //        // Retrieve the HTML content from the request
-    //        $htmlContent = $request->input('html_content');
-    //
-    //        // Save the HTML content to your database (you can use your Eloquent model)
-    //        EmailContent::updateOrcreate(
-    //            ['id' => 1], // Check if a record with this 'id' exists
-    //            [
-    //                'content' => $htmlContent, // Set the 'content' attribute to the new value
-    //                'updated_at' => now(), // Update the 'updated_at' column with the current timestamp
-    //            ]
-    //
-    //        );
-    //
-    //        // Optionally, you can return a response to indicate success or failure
-    //
-    //     //   flash()->addSuccess('email content saved successfully');
-    //    return response()->json(['message' => 'HTML content saved successfully']);
-    //       // return response()->json([flash()->addSuccess('email content saved successfully'););
-    //    }
 }

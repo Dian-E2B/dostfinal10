@@ -17,8 +17,6 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <style>
-
-
             .form-control {
                 color: #000000 !important;
             }
@@ -87,7 +85,6 @@
             @include('layouts.sidebar')
 
 
-
             <div class="main">
                 @include('layouts.header')
 
@@ -125,7 +122,7 @@
                                             <div style="">
                                                 <form id="yearForm" method="POST" action="{{ route('seilistviewajax') }}">
                                                     @csrf
-                                                    <div class="" style="max-width: 4.9cm; margin: auto;">
+                                                    <div class="px-2" style="max-width: 4.9cm; margin: auto;">
                                                         <select style="" name="startYear" id="" class="form-select">
                                                             @foreach ($years as $year)
                                                                 <option style="" value=" {{ $year }}"> {{ $year }} &nbsp;- &nbsp;{{ $year + 1 }}</option>

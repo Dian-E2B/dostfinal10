@@ -8,9 +8,9 @@
         <a class='sidebar-brand'>
             <div class="row">
                 <span class="sidebar-brand-text align-items-center col-4">
-                    <img style="max-width: 70px; max-height: 70px;" id="sidebarimagelogo" src="{{ asset('icons/dost_seal.png') }}" alt="Image Description">
+                    <img style=" margin-left:10px; max-width: 60px; max-height: 60px;" id="sidebarimagelogo" src="{{ asset('icons/dost_seal.png') }}" alt="Image Description">
                 </span>
-                <div style="margin-top: 5px" class="col-6">DOST REGION XI</div>
+                <div style="margin-top: 5px;" class="col-6">DOST REGION XI</div>
 
 
             </div>

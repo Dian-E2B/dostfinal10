@@ -148,13 +148,13 @@ class SendMailController extends Controller
                             ['scholar_id' => $id],
                             ['email' => $email, 'password' => $password101, 'username' => $username]
                         );
+
+                        flash()->addSuccess('Your notice for All Merit has been sent!'); //UPDATED 02/21/2024
                     } catch (Exception $e) {
                         // dd($e->getMessage());
                         flash()->addError('Sorry, an error occurred:' . $e->getMessage());
                     }
                 }
-
-                flash()->addSuccess('Your notice for All Merit has been sent!');
             }
 
 
