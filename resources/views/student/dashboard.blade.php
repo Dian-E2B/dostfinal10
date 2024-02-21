@@ -35,7 +35,7 @@
         @endphp
         {{--    @dd($replyStatusId); --}}
 
-        @if ($replyStatusId == 1)
+        @if ($replyStatusId == 1 || $replyStatusId == 2)
             <!-- Modal -->
             <div class="wrapper">
                 <div class="main">
@@ -46,28 +46,45 @@
                                 <div class="modal-header d-flex align-items-center justify-content-start">
                                     <i style="font-size: 40px" class="fas fa-info-circle"></i>
                                     <h5 style="margin-top: 0.5rem; margin-left: 0.5rem; font-weight: 900; font-size: 1.5rem" class="" id="exampleModalLabel">
-                                        Details Of Orientation
+                                        @if ($replyStatusId == 1)
+                                            Details Of Orientation
+                                        @elseif ($replyStatusId == 2)
+                                            Please Submit your requirements to the DOST office And wait for the confirmation to access the portal.
+                                        @endif
                                     </h5>
                                 </div>
-                                <div class="modal-body" style="font-size: 1.5rem">
-                                    @php
-                                        $emailcontent = DB::table('emailcontent')->first();
-                                        $dateValue = $emailcontent->thisdate;
-                                        $venueValue = $emailcontent->venue;
-                                        $timeValue = $emailcontent->time;
-                                    @endphp
-                                    Venue : {{ $venueValue }}
-                                    <br>
-                                    Date : {{ $dateValue }}
-                                    <br>
-                                    Time : {{ $timeValue }}
-                                </div>
+                                @if ($replyStatusId == 1)
+                                    <div class="modal-body">
+                                        <span style="font-size: 1.1rem">
+                                            @if ($replyStatusId == 2)
+                                                Please Submit your requirements to the DOST office. And wait for the confirmation to access the portal.
+                                            @endif
+                                        </span>
+                                        <br>
+                                        <span style="font-size: 1.5rem">
+                                            @php
+                                                $emailcontent = DB::table('emailcontent')->first();
+                                                $dateValue = $emailcontent->thisdate;
+                                                $venueValue = $emailcontent->venue;
+                                                $timeValue = $emailcontent->time;
+                                            @endphp
+                                            Venue : {{ $venueValue }}
+                                            <br>
+                                            Date : {{ $dateValue }}
+                                            <br>
+                                            Time : {{ $timeValue }}
+                                        </span>
+                                    </div>
+                                @endif
+
                                 <div class="modal-footer">
+                                    @if ($replyStatusId == 1)
+                                        <a href="{{ route('student.replyslipview') }}" class="btn btn-primary">Answer ReplySlip <i class="align-middle me-2" data-feather="edit-3"></i></a>
+                                    @endif
                                     <a class="btn btn-light" href="{{ route('student.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="far fa-power-off"></i><span style="margin-left:8px;">Log out</span></a>
                                     <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                    <a href="{{ route('student.replyslipview') }}" class="btn btn-primary">Answer ReplySlip <i class="align-middle me-2" data-feather="edit-3"></i></a>
                                 </div>
                             </div>
                         </div>
