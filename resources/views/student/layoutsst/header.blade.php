@@ -4,8 +4,8 @@
     </a>
 
     {{-- REQUEST  DROPDOWN BUTTON --}}
-    <ul class="navbar-nav d-none d-lg-flex">
-        <li class="nav-item dropdown">
+    <ul class="navbar-nav d-lg-flex">
+        <li id="requestscholar" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="requestDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Request/Submit
             </a>

@@ -6,9 +6,18 @@
         <link href="{{ asset('css/all.css') }}">
         <link rel="stylesheet" href="{{ asset('css/notyf.min.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            .sidebar-toggle {
+                display: none;
+            }
+
+            body #requestscholar {
+                display: none;
+            }
+        </style>
     </head>
 
-    <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="light">
         <div class="wrapper">
 
             <div class="main">
@@ -140,7 +149,32 @@
                                                         <a href="#" target="_blank" id="filePreviewLink2">Review Signature</a>
                                                     </div>
 
-                                                    <button onclick="return confirm('Confirm? Please note that submission is final and non-editable.')" style="margin-top: 15px;" type="submit" class="btn btn-success"><i data-feather="check"></i> Save</button>
+
+                                                    <!-- Button trigger modal -->
+                                                    <br>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                        Submit
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Warning</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    ...
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary">Understood</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <button onclick="return confirm('Confirm? Please note that submission is final and non-editable.')" style="margin-top: 15px;" type="submit" class="btn btn-success"><i data-feather="check"></i> Save</button> --}}
                                                 @endforeach
                                             </form>
 

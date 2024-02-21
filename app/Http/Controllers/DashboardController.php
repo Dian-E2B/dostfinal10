@@ -167,7 +167,7 @@ class DashboardController extends Controller
             $ongoingProvince = DB::table('seis')
                 ->select('PROVINCE', DB::raw('COUNT(*) as countProvince'))
                 ->groupBy('PROVINCE')
-                ->where('year', $startYear)
+                ->whereBetween('year', [$startYear, $endYear])
                 ->get();
             $dataProvinces = [
                 'labelsprovince' => $ongoingProvince->pluck('PROVINCE'),

@@ -37,32 +37,39 @@
 
         @if ($replyStatusId == 1)
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+            <div class="wrapper">
+                <div class="main">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
 
-                        <div class="modal-header d-flex align-items-center justify-content-start">
-                            <i style="font-size: 40px" class="fas fa-info-circle"></i>
-                            <h5 style="margin-top: 0.5rem; margin-left: 0.5rem; font-weight: 900; font-size: 1.5rem" class="" id="exampleModalLabel">
-                                Details Of Orientation
-                            </h5>
-                        </div>
-                        <div class="modal-body" style="font-size: 1.5rem">
-                            @php
-                                $emailcontent = DB::table('emailcontent')->first();
-                                $dateValue = $emailcontent->thisdate;
-                                $venueValue = $emailcontent->venue;
-                                $timeValue = $emailcontent->time;
-                            @endphp
-                            Venue : {{ $venueValue }}
-                            <br>
-                            Date : {{ $dateValue }}
-                            <br>
-                            Time : {{ $timeValue }}
-                        </div>
-                        <div class="modal-footer">
-                            {{--   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-                            <button type="button" class="btn btn-primary">Answer Reply Slip</button>
+                                <div class="modal-header d-flex align-items-center justify-content-start">
+                                    <i style="font-size: 40px" class="fas fa-info-circle"></i>
+                                    <h5 style="margin-top: 0.5rem; margin-left: 0.5rem; font-weight: 900; font-size: 1.5rem" class="" id="exampleModalLabel">
+                                        Details Of Orientation
+                                    </h5>
+                                </div>
+                                <div class="modal-body" style="font-size: 1.5rem">
+                                    @php
+                                        $emailcontent = DB::table('emailcontent')->first();
+                                        $dateValue = $emailcontent->thisdate;
+                                        $venueValue = $emailcontent->venue;
+                                        $timeValue = $emailcontent->time;
+                                    @endphp
+                                    Venue : {{ $venueValue }}
+                                    <br>
+                                    Date : {{ $dateValue }}
+                                    <br>
+                                    Time : {{ $timeValue }}
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-light" href="{{ route('student.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="far fa-power-off"></i><span style="margin-left:8px;">Log out</span></a>
+                                    <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                    <a href="{{ route('student.replyslipview') }}" class="btn btn-primary">Answer ReplySlip <i class="align-middle me-2" data-feather="edit-3"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

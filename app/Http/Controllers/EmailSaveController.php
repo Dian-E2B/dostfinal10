@@ -47,47 +47,79 @@ class EmailSaveController extends Controller
         try {
             $emailcontent101 = $request->input('content');
 
-
             $this->validate($request, [
                 'content' => 'required',
             ]);
 
+            $updatedOrCreated = EmailContent::updateOrcreate(
+                ['id' => 1], // Check if a record with this 'id' exists
+                [
+                    'content' => $emailcontent101, // Set the 'content' attribute to the new value
+                    'updated_at' => now(), // Update the 'updated_at' column with the current timestamp
+                ]
 
+            );
 
-            $emailContent = EmailContent::find(1); // Find the record with ID 1
-            $rowsemail = DB::table('emailcontent')
-                ->select([
-                    DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Date: [', -1), ']', 1) as date"),
-                    DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Time: [', -1), ']', 1) as time"),
-                    DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Zoom Link/Venue: [', -1), ']', 1) as zoom"),
-                    DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Venue: [', -1), ']', 1) as venue"),
-                ])
-                ->get();
+            if ($updatedOrCreated) {
+                $emailContent = EmailContent::find(1); // Find the record with ID 1
+                $rowsemail = DB::table('emailcontent')
+                    ->select([
+                        DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Date: [', -1), ']', 1) as date"),
+                        DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Time: [', -1), ']', 1) as time"),
+                        DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Zoom Link/Venue: [', -1), ']', 1) as zoom"),
+                        DB::raw("SUBSTRING_INDEX(SUBSTRING_INDEX(content, 'Venue: [', -1), ']', 1) as venue"),
+                    ])
+                    ->get();
 
-            if ($emailContent) {
+                if ($emailContent) {
+                    $emailContent->updated_at = now(); // Update the 'updated_at' attribute
+                    $emailContent->thisdate = $rowsemail[0]->date;
+                    $emailContent->venue = $rowsemail[0]->venue;
+                    $emailContent->time = $rowsemail[0]->time;
+                    $emailContent->save(); // Save the updated record
+                } else {
+                    // If the record with ID 1 doesn't exist, create a new one
 
-                $emailContent->thisdate = $rowsemail[0]->date;
-                $emailContent->venue = $rowsemail[0]->venue;
-                $emailContent->time = $rowsemail[0]->time;
-                $emailContent->save(); // Save the updated record
-
-            } else {
-                // If the record with ID 1 doesn't exist, create a new one
-                EmailContent::create([
-                    'id' => 1, // Set the 'id' attribute
-                    'content' => $emailcontent101, // Set the 'content' attribute
-                    'updated_at' => now(), // Set the 'updated_at' attribute
-                    'thisdate' => $rowsemail[0]->date,
-                    'venue' => $rowsemail[0]->venue,
-                    'time' => $rowsemail[0]->time,
-                ]);
+                }
+                /*  flash()->addSuccess('email content saved successfully'); */
+                return redirect()->back();
             }
-
-            //            flash()->addSuccess('email content saved successfully');
-            return redirect()->back();
         } catch (\Exception $e) {
             // Log the error or return an error response
             return response()->json(['error' => 'Something went wrong'], 500);
         }
     }
+
+    //    public function show()
+    //    {
+    //        $emailcontents = EmailContent::all();
+    //
+    //
+    //        return view('show',compact('emailcontents'));
+    //    }
+
+
+
+    //
+    //    public function storeHTMLContent(Request $request)
+    //    {
+    //        // Retrieve the HTML content from the request
+    //        $htmlContent = $request->input('html_content');
+    //
+    //        // Save the HTML content to your database (you can use your Eloquent model)
+    //        EmailContent::updateOrcreate(
+    //            ['id' => 1], // Check if a record with this 'id' exists
+    //            [
+    //                'content' => $htmlContent, // Set the 'content' attribute to the new value
+    //                'updated_at' => now(), // Update the 'updated_at' column with the current timestamp
+    //            ]
+    //
+    //        );
+    //
+    //        // Optionally, you can return a response to indicate success or failure
+    //
+    //     //   flash()->addSuccess('email content saved successfully');
+    //    return response()->json(['message' => 'HTML content saved successfully']);
+    //       // return response()->json([flash()->addSuccess('email content saved successfully'););
+    //    }
 }
