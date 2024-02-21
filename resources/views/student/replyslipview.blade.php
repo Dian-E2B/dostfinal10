@@ -38,7 +38,7 @@
 
                                         @if ($replyslipstatusid != 1)
                                             @foreach ($replyslips as $replyslip)
-                                                <p>As one of those who qualified for the {{ now()->year }} DOST-SEI S&T Undergraduate Scholarships under {{ $programname }}, I wish to inform you that: (Please check)</p>
+                                                <p>As one of those who qualified for the {{ now()->year }} DOST-SEI S&T Undergraduate Scholarships under {{ $programname }}, I wish to inform you that:</p>
                                                 @if ($replyslipstatusid == 2 || $replyslipstatusid == 5)
                                                     <div>
                                                         <strong> I am AVAILING my scholarship award.</strong>
@@ -96,11 +96,6 @@
                                                         <img style="max-height: 300px; max-width: 300px" src="{{ asset($replyslipparentsignature) }}" alt="none ">
                                                     </div>
                                                 @endif
-
-
-
-
-
                                                 <label>
                                                     <input name="scholarid" style="display: none;" value="{{ $replyslip->scholar_id }}">
                                                 </label>
@@ -161,15 +156,16 @@
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Warning</h1>
+                                                                    <i style="font-size: 30px; color: #f8d404" class="fas fa-exclamation-triangle"></i>
+                                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel"><span style="margin-bottom: 15px; margin-left: 5px; font-size: 20px;"> Warning</span></h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    ...
+                                                                    <h5>Confirm? Please note that the submission is final and non-editable.</h5>
                                                                 </div>
-                                                                <div class="modal-footer">
+                                                                <div style="margin-right: 5px; margin-bottom:5px; text-align: right;">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary">Understood</button>
+                                                                    <button type="submit" class="btn btn-primary">Understood</button>
                                                                 </div>
                                                             </div>
                                                         </div>
