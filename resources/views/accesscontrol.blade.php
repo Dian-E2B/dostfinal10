@@ -156,7 +156,8 @@
                                                          <td class="table-action">
                                                              <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
                                                              <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account"><i class="fas fa-trash"></i></a>
-                                                             <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check" style="color: #006f1c;"></i></a>
+                                                             <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Scholar Details"><i class="fas fa-eye"></i></a>
+                                                             {{--      <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check" style="color: #006f1c;"></i></a> --}}
                                                          </td>
 
                                                      </tr>
@@ -168,6 +169,7 @@
                                                          <td>{{ $replyslipsjoinscholarongoing1->lname }},
                                                              {{ $replyslipsjoinscholarongoing1->fname }}
                                                              {{ $replyslipsjoinscholarongoing1->mname }} </td>
+
                                                          <td class="">{{ $replyslipsjoinscholarongoing1->email }}
                                                          </td>
                                                          <td style="color:deepskyblue">
@@ -182,10 +184,19 @@
                                              @elseif(request()->is('accesscontrolenrolled'))
                                                  @foreach ($replyslipsjoinscholarenrolled as $replyslipsjoinscholarenrolled1)
                                                      <tr>
-                                                         <td>{{ $replyslipsjoinscholarenrolled1->sei_id }}</td>
+                                                         <td>{{ $replyslipsjoinscholarenrolled1->id }}</td>
+                                                         <td>{{ $replyslipsjoinscholarenrolled1->year }}</td>
                                                          <td>{{ $replyslipsjoinscholarenrolled1->lname }},
                                                              {{ $replyslipsjoinscholarenrolled1->fname }}
                                                              {{ $replyslipsjoinscholarenrolled1->mname }} </td>
+                                                         <td>
+                                                             @if ($replyslipsjoinscholarenrolled1->gender_id == 1)
+                                                                 F
+                                                             @else
+                                                                 M
+                                                             @endif
+                                                             {{--  {{ $seisterminated1->gender_id }} --}}
+                                                         </td>
                                                          <td class="">{{ $replyslipsjoinscholarenrolled1->email }}
                                                          </td>
                                                          <td style="color:green">

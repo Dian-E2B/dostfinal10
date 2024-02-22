@@ -13,6 +13,7 @@ class Requestdocs extends Model
     protected $fillable = [
         'scholar_id',
         'document_details',
-        'document ',
+        'document_type',
+        'date_uploaded',
     ];
 }

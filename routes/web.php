@@ -150,6 +150,8 @@ Route::POST('/studenteditcog', [\App\Http\Controllers\StudentViewController::cla
     ->middleware(['auth:student', 'verified'])->name('studenteditcog');
 Route::POST('/saveDraft', [\App\Http\Controllers\StudentActionsController::class, 'saveDraft'])
     ->middleware(['auth:student', 'verified'])->name('saveDraft');
+Route::POST('/savefirstrequirements', [\App\Http\Controllers\StudentViewController::class, 'savefirstrequirements'])
+    ->middleware(['auth:student', 'verified'])->name('savefirstrequirements');
 
 
 

@@ -32,10 +32,11 @@
         {{--  <p>Logged-in scholar_id: {{ auth()->user()->scholar_id }}</p> --}}
         @php
             $replyStatusId = \App\Models\Replyslips::where('scholar_id', auth()->user()->scholar_id)->value('replyslip_status_id');
+
         @endphp
         {{--    @dd($replyStatusId); --}}
 
-        @if ($replyStatusId == 1 || $replyStatusId == 2)
+        @if ($replyStatusId == 1 || $replyStatusId == 2 || $replyStatusId == 6)
             <!-- Modal -->
             <div class="wrapper">
                 <div class="main">
@@ -49,18 +50,15 @@
                                         @if ($replyStatusId == 1)
                                             Details Of Orientation
                                         @elseif ($replyStatusId == 2)
-                                            Please Submit your requirements to the DOST office And wait for the confirmation to access the portal.
+                                            Please Upload your requirements and wait for confirmation to access the portal.
+                                        @elseif($replyStatusId == 6)
+                                            Please wait for confirmation to access the portal.
                                         @endif
+
                                     </h5>
                                 </div>
                                 @if ($replyStatusId == 1)
                                     <div class="modal-body">
-                                        <span style="font-size: 1.1rem">
-                                            @if ($replyStatusId == 2)
-                                                Please Submit your requirements to the DOST office. And wait for the confirmation to access the portal.
-                                            @endif
-                                        </span>
-                                        <br>
                                         <span style="font-size: 1.5rem">
                                             @php
                                                 $emailcontent = DB::table('emailcontent')->first();
@@ -75,11 +73,71 @@
                                             Time : {{ $timeValue }}
                                         </span>
                                     </div>
-                                @endif
+                                @elseif ($replyStatusId == 2)
+                                    <form method="POST" id="submit-form" action="{{ route('savefirstrequirements') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <input hidden name="scholarid" value="{{ auth()->user()->scholar_id }}">
+                                        <div class="modal-body">
+                                            <span style="font-size: 1.3rem">
+                                                <div class="row g-1">
+                                                    <div class="col-4">
+                                                        <div class="mb-1">
+                                                            <label class="form-label"> Scholarship Agreement</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="mb-1">
+                                                            <input name="scholarshipagreement" class="form-control form-control-lg" accept="application/pdf" type="file">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-1">
+                                                    <div class="col-4">
+                                                        <div class="mb-1">
+                                                            <label class="form-label"> Information Sheet</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="mb-1">
+                                                            <input class="form-control form-control-lg " accept="application/pdf" name="informationsheet" type="file">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-1">
+                                                    <div class="col-4">
+                                                        <div class="mb-1">
+                                                            <label for="formFile" class="form-label">Scholar's Oath</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="mb-1">
+                                                            <input class="form-control form-control-lg" accept="application/pdf" type="file" id="formFile" name="scholaroath">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-1">
+                                                    <div class="col-4">
+                                                        <div class="mb-1">
+                                                            <label for="formFile" class="form-label">Prospectus</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="mb-1">
+                                                            <input class="form-control form-control-lg" accept="application/pdf" type="file" id="formFile" name="prospectus">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                            </span>
+                                        </div>
+                                    </form>
+                                @endif
                                 <div class="modal-footer">
                                     @if ($replyStatusId == 1)
                                         <a href="{{ route('student.replyslipview') }}" class="btn btn-primary">Answer ReplySlip <i class="align-middle me-2" data-feather="edit-3"></i></a>
+                                    @elseif ($replyStatusId == 2)
+                                        {{-- SUBMIT FORM --}}
+                                        <a id="submitBtn" href="{{ route('savefirstrequirements') }}" class="btn btn-primary" style="display: none;" onclick="event.preventDefault(); document.getElementById('submit-form').submit();"><i class="fas fa-check-square"></i><span style="margin-left:8px;">Submit</span></a>
                                     @endif
                                     <a class="btn btn-light" href="{{ route('student.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="far fa-power-off"></i><span style="margin-left:8px;">Log out</span></a>
                                     <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
@@ -150,6 +208,31 @@
             });
             myModal.show(); // This will show the modal immediately
         });
+
+        var fileInputs = document.querySelectorAll('#submit-form input[type="file"]');
+
+        // Function to check if all file inputs have a file
+        function checkAllFilesSelected() {
+            for (var i = 0; i < fileInputs.length; i++) {
+                if (!fileInputs[i].value) {
+                    // If any input doesn't have a file, hide the link and return
+                    document.getElementById('submitBtn').style.display = 'none';
+                    return;
+                }
+            }
+
+            // If all inputs have a file, show the link
+            document.getElementById('submitBtn').style.display = 'block';
+        }
+
+        // Add event listeners to all file inputs
+        fileInputs.forEach(function(input) {
+            input.addEventListener('change', checkAllFilesSelected);
+        });
+
+        // Initial check
+        checkAllFilesSelected();
     </script>
+
 
 </html>

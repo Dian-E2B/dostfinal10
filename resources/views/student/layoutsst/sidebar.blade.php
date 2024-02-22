@@ -13,7 +13,7 @@
                 <img style="max-width: 90px; max-height: 90px;" id="sidebarimagelogo" src="{{ asset('icons/DOST_scholar_logo.svg') }}" alt="Image Description">
             </span>
             @php
-                $scholarinfo = DB::select('SELECT fname,lname  FROM seis WHERE id = ?', [Auth::user()->scholar_id]);
+                $scholarinfo = DB::select('SELECT fname, lname FROM seis WHERE id = ?', [auth()->user()->scholar_id]);
             @endphp
             @if (!empty($scholarinfo))
                 @foreach ($scholarinfo as $info)
@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-center mt-2">
 
             @php
-                $scholarstatusidresult = DB::select('SELECT scholar_status_id FROM seis WHERE id = ?', [$scholarId]);
+                $scholarstatusidresult = DB::select('SELECT scholar_status_id FROM seis WHERE id = ?', [auth()->user()->scholar_id]);
                 $statusExists = isset($scholarstatusidresult[0]);
             @endphp
             <div class="sidebar-user-subtitle" style="font-size: 20px">

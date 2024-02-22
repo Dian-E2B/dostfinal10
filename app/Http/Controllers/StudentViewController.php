@@ -6,6 +6,7 @@ use App\Models\Cogdetails;
 use App\Models\Program;
 use App\Models\Replyslips;
 use App\Models\Requestdocs;
+use App\Models\Scholar_requirements;
 use App\Models\Scholars;
 use App\Models\Sei;
 use App\Models\Student;
@@ -24,6 +25,51 @@ class StudentViewController extends Controller
         $replyslips = Replyslips::where('scholar_id', $scholarId)->get();
         $replyslipstatus = Replyslips::where('scholar_id', $scholarId)->value('replyslip_status_id');
         return view('student.dashboard', compact('scholarId', 'replyslips', 'replyslipstatus')); //DASHBOARD VIEW
+    }
+
+    public function savefirstrequirements(Request $request)
+    {
+        /* $scholarshipagreement1 = $request->input('scholarshipagreement'); */
+        /*   $informationsheet1 = $request->input('informationsheet'); */
+        /* $scholaroath1 = $request->input('scholaroath'); */
+        /* $prospectus1 = $request->input('prospectus'); */
+        $scholarid1 = $request->input('scholarid');
+
+        $customstudentprospectusfilename = $scholarid1 . 'prospectus' . time() . '.' . $request->file('prospectus')->getClientOriginalExtension();
+        $storeprospectus = $request->file('prospectus')->storeAs('public/documents', $customstudentprospectusfilename);
+
+        $customstudentscholarshipagreement = $scholarid1 . 'scholarshipagreement' . time() . '.' . $request->file('scholarshipagreement')->getClientOriginalExtension();
+        $storescholarshipagreement = $request->file('scholarshipagreement')->storeAs('public/documents', $customstudentscholarshipagreement);
+
+        $customstudentscholaroath = $scholarid1 . 'scholaroath' . time() . '.' . $request->file('scholaroath')->getClientOriginalExtension();
+        $storescholaroath = $request->file('scholaroath')->storeAs('public/documents', $customstudentscholaroath);
+
+        $customstudentsinformationsheet = $scholarid1 . 'informationsheet' . time() . '.' . $request->file('informationsheet')->getClientOriginalExtension();
+        $storeinformationsheet = $request->file('informationsheet')->storeAs('public/documents', $customstudentscholaroath);
+
+        if ($storeprospectus && $storescholarshipagreement &&   $storescholaroath &&  $storeinformationsheet) {
+            $Scholar_requirements = Scholar_requirements::create([
+                'scholar_id' => $scholarid1,
+                'date_uploaded' => now(),
+                'scholarshipagreement' => 'storage/documents/' . $customstudentscholarshipagreement,
+                'informationsheet' => 'storage/documents/' . $customstudentscholarshipagreement,
+                'scholaroath' => 'storage/documents/' . $customstudentsinformationsheet,
+                'prospectus' => 'storage/documents/' . $customstudentprospectusfilename,
+                'scholarid' => $scholarid1,
+            ]);
+
+            $replySlips = Replyslips::where('scholar_id', $scholarid1)->update(['replyslip_status_id' => 6]);
+            if ($Scholar_requirements &&  $replySlips) {
+                notyf()
+                    ->position('y', 'top')
+                    ->position('x', 'right')
+                    ->duration(4000) // 3 seconds
+                    ->addSuccess('Your requirements has been uploaded.');
+                return redirect('student/dashboard');
+            } else {
+                return back();
+            }
+        }
     }
 
     public function replyslipview()
@@ -165,6 +211,7 @@ class StudentViewController extends Controller
             return back()->with('error', 'Cog details not found', 404);
         }
     }
+
 
 
     public function savepdfclearance(Request $request)
