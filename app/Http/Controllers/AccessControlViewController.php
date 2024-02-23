@@ -198,6 +198,5 @@ class AccessControlViewController extends Controller
     {
         $scholarrequirements = Scholar_requirements::where('scholar_id', $id)->first();
         return response()->json($scholarrequirements);
-        /*  return view('scholar_information', compact('seisourcerecord', 'scholarrequirements')); */
     }
 }

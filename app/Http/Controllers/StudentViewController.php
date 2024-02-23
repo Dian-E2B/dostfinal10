@@ -36,25 +36,26 @@ class StudentViewController extends Controller
         /* $prospectus1 = $request->input('prospectus'); */
         $scholarid1 = $request->input('scholarid');
 
-        $customstudentprospectusfilename = $scholarid1 . 'prospectus' . time() . '.' . $request->file('prospectus')->getClientOriginalExtension();
-        $storeprospectus = $request->file('prospectus')->storeAs('public/documents', $customstudentprospectusfilename);
-
         $customstudentscholarshipagreement = $scholarid1 . 'scholarshipagreement' . time() . '.' . $request->file('scholarshipagreement')->getClientOriginalExtension();
         $storescholarshipagreement = $request->file('scholarshipagreement')->storeAs('public/documents', $customstudentscholarshipagreement);
+
+        $customstudentsinformationsheet = $scholarid1 . 'informationsheet' . time() . '.' . $request->file('informationsheet')->getClientOriginalExtension();
+        $storeinformationsheet = $request->file('informationsheet')->storeAs('public/documents', $customstudentsinformationsheet);
 
         $customstudentscholaroath = $scholarid1 . 'scholaroath' . time() . '.' . $request->file('scholaroath')->getClientOriginalExtension();
         $storescholaroath = $request->file('scholaroath')->storeAs('public/documents', $customstudentscholaroath);
 
-        $customstudentsinformationsheet = $scholarid1 . 'informationsheet' . time() . '.' . $request->file('informationsheet')->getClientOriginalExtension();
-        $storeinformationsheet = $request->file('informationsheet')->storeAs('public/documents', $customstudentscholaroath);
+        $customstudentprospectusfilename = $scholarid1 . 'prospectus' . time() . '.' . $request->file('prospectus')->getClientOriginalExtension();
+        $storeprospectus = $request->file('prospectus')->storeAs('public/documents', $customstudentprospectusfilename);
 
-        if ($storeprospectus && $storescholarshipagreement &&   $storescholaroath &&  $storeinformationsheet) {
+
+        if ($storeprospectus && $storescholarshipagreement && $storescholaroath && $storeinformationsheet) {
             $Scholar_requirements = Scholar_requirements::create([
                 'scholar_id' => $scholarid1,
                 'date_uploaded' => now(),
                 'scholarshipagreement' => 'storage/documents/' . $customstudentscholarshipagreement,
-                'informationsheet' => 'storage/documents/' . $customstudentscholarshipagreement,
-                'scholaroath' => 'storage/documents/' . $customstudentsinformationsheet,
+                'informationsheet' => 'storage/documents/' . $customstudentsinformationsheet,
+                'scholaroath' => 'storage/documents/' . $customstudentscholaroath,
                 'prospectus' => 'storage/documents/' . $customstudentprospectusfilename,
                 'scholarid' => $scholarid1,
             ]);
@@ -64,7 +65,7 @@ class StudentViewController extends Controller
                 notyf()
                     ->position('y', 'top')
                     ->position('x', 'right')
-                    ->duration(4000) // 3 seconds
+                    ->duration(4000) // 4 seconds
                     ->addSuccess('Your requirements has been uploaded.');
                 return redirect('student/dashboard');
             } else {

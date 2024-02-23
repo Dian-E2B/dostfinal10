@@ -87,7 +87,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <div class="mb-1">
-                                                            <input name="scholarshipagreement" class="form-control form-control-lg" accept="application/pdf" type="file">
+                                                            <input class="form-control form-control-lg" accept="application/pdf" type="file" name="scholarshipagreement">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -99,7 +99,7 @@
                                                     </div>
                                                     <div class="col-auto">
                                                         <div class="mb-1">
-                                                            <input class="form-control form-control-lg " accept="application/pdf" name="informationsheet" type="file">
+                                                            <input class="form-control form-control-lg " accept="application/pdf" type="file" name="informationsheet">
                                                         </div>
                                                     </div>
                                                 </div>

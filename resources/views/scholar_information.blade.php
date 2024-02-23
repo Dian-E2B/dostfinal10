@@ -16,10 +16,9 @@
                 padding: 0;
             }
 
-
-
             .tdviewreq {
-                padding-left: 15px !important;
+                text-align: center;
+                font-size: 15px
             }
         </style>
     </head>
@@ -30,38 +29,88 @@
             <div class="main">
                 @include('layouts.header')
                 {{-- @dd($seisourcerecord) --}}
-                {{--   @dd($scholarrequirements) --}}
+                {{-- @dd($scholarrequirements) --}}
+                @php
+                    $scholarStatusId = \App\Models\Sei::where('id', $seisourcerecord->id)->value('scholar_status_id');
+                @endphp
+
                 <main class="main">
                     <div class="container-fluid p-2">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-12">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h5 class="card-title mb-0">Student Profile</h5>
+                                        <h5 class="card-title mb-0" style="color: rgb(58, 58, 58)">Student Profile</h5>
                                     </div>
                                     <div class="card-body text-center">
-                                        <h5 class="card-title mb-0">{{ $seisourcerecord->lname }}, {{ $seisourcerecord->fname }}</h5>
-                                        <div class="text-muted mb-2">[Status]</div>
+                                        <h2 class=" mb-0">{{ $seisourcerecord->lname }}, {{ $seisourcerecord->fname }}</h2>
+                                        <div class="text-muted mb-2">
+                                            @switch($scholarStatusId)
+                                                @case(1)
+                                                    Pending
+                                                @break
+
+                                                @case(2)
+                                                    Ongoing
+                                                @break
+
+                                                @case(3)
+                                                    Enrolled
+                                                @break
+
+                                                @case(4)
+                                                    Deffered
+                                                @break
+
+                                                @case(5)
+                                                    LOA
+                                                @break
+
+                                                @case(6)
+                                                    Terminated
+                                                @break
+
+                                                @default
+                                                    None
+                                            @endswitch
+                                        </div>
                                     </div>
                                     <hr class="my-0" />
                                     <div class="card-body">
                                         <h3 class="bold" style="color: black; font-weight: 900">Requirements Uploaded</h3>
-                                        <table width="100%">
+                                        <table class="nowrap compact table table-bordered table-sm" width="100%">
                                             <tr>
                                                 <td>Scholarship Agreement</td>
-                                                <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqsholarship"><i class="fas fa-eye"></a></i></td>
+                                                @if (empty($scholarrequirements))
+                                                    <td class="tdviewreq">No uploaded file</td>
+                                                @else
+                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqsholarship"><i class="fas fa-eye"></a></i></td>
+                                                @endif
                                             </tr>
                                             <tr>
+
                                                 <td>Information Sheet</td>
-                                                <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqinformation"><i class="fas fa-eye"></a></i></td>
+                                                @if (empty($scholarrequirements))
+                                                    <td class="tdviewreq">No uploaded file</td>
+                                                @else
+                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqinformation"><i class="fas fa-eye"></a></i></td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td>Scholar's Oath</td>
-                                                <td class="tdviewreq">[view]</td>
+                                                @if (empty($scholarrequirements))
+                                                    <td class="tdviewreq">No uploaded file</td>
+                                                @else
+                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqoath"><i class="fas fa-eye"></a></td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td>Prospectus</td>
-                                                <td class="tdviewreq">[view]</td>
+                                                @if (empty($scholarrequirements))
+                                                    <td class="tdviewreq">No uploaded file</td>
+                                                @else
+                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqprospectus"><i class="fas fa-eye"></td>
+                                                @endif
                                             </tr>
                                         </table>
                                     </div>
@@ -77,14 +126,10 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div id="thisdiv"></div>
-
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-
-                                    <iframe id="ifrm" frameborder="0" scrolling="no" height="100%" width="100%" type="application/pdf"></iframe>
-
-
+                                    <iframe id="ifrm" frameborder="0" scrolling="no" height="100%" width="100%" type="application/pdf" title="blankdashboard"></iframe>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -103,23 +148,28 @@
     <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            $('#viewRequirementsModal').on('hidden.bs.modal', function() {
+                /*  console.log('Modal is hidden'); */
+                $('#viewRequirementsModal #thisdiv').empty();
+                $('#viewRequirementsModal #ifrm').attr('src', '');
+
+            });
+
             //FOR SCHOLARSHIP ICON
             $(document).on('click', '.viewreqsholarship', function() {
+                var number = $(this).data('id');
+
+
+
                 let modal = new bootstrap.Modal('#viewRequirementsModal');
                 modal.show()
-                var number = $(this).data('id');
-                $('#viewRequirementsModal').on('hidden.bs.modal', function() {
-                    console.log('Modal is hidden');
-                    $('#viewRequirementsModal #thisdiv').empty();
-                    $('#viewRequirementsModal #ifrm').attr('src', '');
-
-                });
                 $.ajax({
                     url: '{{ url('/requirements_view/') }}' + '/' + number,
                     method: 'GET',
 
                     success: function(data) {
-                        /*    console.log(data); */
+                        console.log(data.scholarshipagreement);
                         var filePath = '/' + data.scholarshipagreement;
                         $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Scholarship Agreement</h1>');
                         $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath);
@@ -130,26 +180,62 @@
                 });
             });
 
-            //FOR INFORMARTION
-            $(document).on('click', '.viewreqsholarship', function() {
+            //FOR INFORMARTIONSHEET
+            $(document).on('click', '.viewreqinformation', function() {
+                var number = $(this).data('id');
                 let modal = new bootstrap.Modal('#viewRequirementsModal');
                 modal.show()
-                var number = $(this).data('id');
-                $('#viewRequirementsModal').on('hidden.bs.modal', function() {
-                    console.log('Modal is hidden');
-                    $('#viewRequirementsModal #thisdiv').empty();
-                    $('#viewRequirementsModal #ifrm').attr('src', '');
-
-                });
                 $.ajax({
                     url: '{{ url('/requirements_view/') }}' + '/' + number,
                     method: 'GET',
 
                     success: function(data) {
                         /*    console.log(data); */
-                        var filePath = '/' + data.scholarshipagreement;
-                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Scholarship Agreement</h1>');
-                        $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath);
+                        var filePath1 = '/' + data.informationsheet;
+                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Information sheet</h1>');
+                        $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath1);
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data for editing:', error);
+                    }
+                });
+            });
+
+
+            //FOR Scholar's Oath
+            $(document).on('click', '.viewreqoath', function() {
+                var number = $(this).data('id');
+                let modal = new bootstrap.Modal('#viewRequirementsModal');
+                modal.show()
+                $.ajax({
+                    url: '{{ url('/requirements_view/') }}' + '/' + number,
+                    method: 'GET',
+
+                    success: function(data) {
+                        /*    console.log(data); */
+                        var filePath2 = '/' + data.scholaroath;
+                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Scholaroath</h1>');
+                        $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath2);
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data for editing:', error);
+                    }
+                });
+            });
+
+            $(document).on('click', '.viewreqprospectus', function() {
+                var number = $(this).data('id');
+                let modal = new bootstrap.Modal('#viewRequirementsModal');
+                modal.show()
+                $.ajax({
+                    url: '{{ url('/requirements_view/') }}' + '/' + number,
+                    method: 'GET',
+
+                    success: function(data) {
+                        /*    console.log(data); */
+                        var filePath3 = '/' + data.scholaroath;
+                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">PROSPECTUS</h1>');
+                        $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath3);
                     },
                     error: function(error) {
                         console.error('Error fetching data for editing:', error);
