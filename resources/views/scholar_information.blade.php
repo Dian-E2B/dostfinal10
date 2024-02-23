@@ -82,34 +82,34 @@
                                             <tr>
                                                 <td>Scholarship Agreement</td>
                                                 @if (empty($scholarrequirements))
-                                                    <td class="tdviewreq">No uploaded file</td>
+                                                    <td class="tdviewreq">No File Uploaded</td>
                                                 @else
-                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqsholarship"><i class="fas fa-eye"></a></i></td>
+                                                    <td class="tdviewreq"><a style="display:block" href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqsholarship"><i style="font-size: 15px;" class="fas fa-eye"></i></a></td>
                                                 @endif
                                             </tr>
                                             <tr>
 
                                                 <td>Information Sheet</td>
                                                 @if (empty($scholarrequirements))
-                                                    <td class="tdviewreq">No uploaded file</td>
+                                                    <td class="tdviewreq">No File Uploaded</td>
                                                 @else
-                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqinformation"><i class="fas fa-eye"></a></i></td>
+                                                    <td class="tdviewreq"><a style="display:block" href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqinformation"><i class="fas fa-eye"></a></i></td>
                                                 @endif
                                             </tr>
                                             <tr>
                                                 <td>Scholar's Oath</td>
                                                 @if (empty($scholarrequirements))
-                                                    <td class="tdviewreq">No uploaded file</td>
+                                                    <td class="tdviewreq">No File Uploaded</td>
                                                 @else
-                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqoath"><i class="fas fa-eye"></a></td>
+                                                    <td class="tdviewreq"><a style="display:block" href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqoath"><i class="fas fa-eye"></a></td>
                                                 @endif
                                             </tr>
                                             <tr>
                                                 <td>Prospectus</td>
                                                 @if (empty($scholarrequirements))
-                                                    <td class="tdviewreq">No uploaded file</td>
+                                                    <td class="tdviewreq">No File Uploaded</td>
                                                 @else
-                                                    <td class="tdviewreq"><a href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqprospectus"><i class="fas fa-eye"></td>
+                                                    <td class="tdviewreq"><a style="display:block" href="#" data-id="{{ $seisourcerecord->id }}" class="viewreqprospectus"><i class="fas fa-eye"></td>
                                                 @endif
                                             </tr>
                                         </table>
@@ -131,10 +131,10 @@
                                 <div class="modal-body">
                                     <iframe id="ifrm" frameborder="0" scrolling="no" height="100%" width="100%" type="application/pdf" title="blankdashboard"></iframe>
                                 </div>
-                                <div class="modal-footer">
+                                {{--  <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                     success: function(data) {
                         console.log(data.scholarshipagreement);
                         var filePath = '/' + data.scholarshipagreement;
-                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Scholarship Agreement</h1>');
+                        $('#viewRequirementsModal #thisdiv').append('<h3 class="modal-title" id="exampleModalLabel"><strong>Scholarship Agreement</strong></h3');
                         $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath);
                     },
                     error: function(error) {
@@ -192,7 +192,7 @@
                     success: function(data) {
                         /*    console.log(data); */
                         var filePath1 = '/' + data.informationsheet;
-                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Information sheet</h1>');
+                        $('#viewRequirementsModal #thisdiv').append('<h3 class="modal-title" id="exampleModalLabel"><strong>Information Sheet</strong></h1>');
                         $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath1);
                     },
                     error: function(error) {
@@ -214,7 +214,7 @@
                     success: function(data) {
                         /*    console.log(data); */
                         var filePath2 = '/' + data.scholaroath;
-                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">Scholaroath</h1>');
+                        $('#viewRequirementsModal #thisdiv').append('<h3 class="modal-title" id="exampleModalLabel"><strong>Scholar Oath</strong></h3>');
                         $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath2);
                     },
                     error: function(error) {
@@ -234,7 +234,7 @@
                     success: function(data) {
                         /*    console.log(data); */
                         var filePath3 = '/' + data.scholaroath;
-                        $('#viewRequirementsModal #thisdiv').append('<h1 class="modal-title fs-5" id="exampleModalLabel">PROSPECTUS</h1>');
+                        $('#viewRequirementsModal #thisdiv').append('<h3 class="modal-title" id="exampleModalLabel"><strong>Prospectus</h3>');
                         $('#viewRequirementsModal #ifrm').attr('src', '{{ url('/') }}' + filePath3);
                     },
                     error: function(error) {
