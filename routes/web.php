@@ -75,7 +75,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
 
     //SCHOLAR FULL INFORMATION
     Route::get('/scholar_information/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'scholar_information'])->name('scholar_information');
-
+    //SCHOLAR FIRST REQUIREMENTS VIEW
+    Route::get('/requirements_view/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'requirements_view'])->name('requirements_view');
     //ONGOINGLIST
     Route::get('/ongoinglist', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglist'])->name('ongoinglist');
     Route::get('dashboard', [DashboardController::class, 'dashboardview'])->name('dashboard');

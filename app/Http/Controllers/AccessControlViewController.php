@@ -193,4 +193,11 @@ class AccessControlViewController extends Controller
 
         return view('scholar_information', compact('seisourcerecord', 'scholarrequirements'));
     }
+
+    public function requirements_view(Request $request, $id)
+    {
+        $scholarrequirements = Scholar_requirements::where('scholar_id', $id)->first();
+        return response()->json($scholarrequirements);
+        /*  return view('scholar_information', compact('seisourcerecord', 'scholarrequirements')); */
+    }
 }

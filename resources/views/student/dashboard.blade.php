@@ -199,7 +199,6 @@
     </body>
     <script src="{{ asset('js/all.js') }}"></script>
 
-    {{-- CHECKBOXES DISABLING --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
@@ -215,7 +214,6 @@
         function checkAllFilesSelected() {
             for (var i = 0; i < fileInputs.length; i++) {
                 if (!fileInputs[i].value) {
-                    // If any input doesn't have a file, hide the link and return
                     document.getElementById('submitBtn').style.display = 'none';
                     return;
                 }
