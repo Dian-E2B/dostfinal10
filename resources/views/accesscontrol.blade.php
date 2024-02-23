@@ -156,7 +156,7 @@
                                                          <td class="table-action">
                                                              <a href="#" style="color: black;" data-bs-toggle="tooltip" data-bs-placement="top" title="Temporary lock account	"><i class="fad fa-user-lock"></i></a>
                                                              <a style="color: red; margin-left: 8px;" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Permanently delete account"><i class="fas fa-trash"></i></a>
-                                                             <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Scholar Details"><i class="fas fa-eye"></i></a>
+                                                             <a href="{{ route('scholar_information', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Scholar Details"><i class="fas fa-eye"></i></a>
                                                              {{--      <a href="{{ route('enrollscholartoongoing', ['id' => $rasp->id]) }}" style="color:  black; margin-left: 8px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Enroll Scholar"><i class="fas fa-user-check" style="color: #006f1c;"></i></a> --}}
                                                          </td>
 

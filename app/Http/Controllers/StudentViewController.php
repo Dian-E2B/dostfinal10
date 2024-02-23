@@ -27,6 +27,7 @@ class StudentViewController extends Controller
         return view('student.dashboard', compact('scholarId', 'replyslips', 'replyslipstatus')); //DASHBOARD VIEW
     }
 
+
     public function savefirstrequirements(Request $request)
     {
         /* $scholarshipagreement1 = $request->input('scholarshipagreement'); */

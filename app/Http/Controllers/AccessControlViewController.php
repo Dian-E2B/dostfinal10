@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ongoing;
 use App\Models\Replyslips;
+use App\Models\Scholar_requirements;
 use App\Models\Sei;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -122,7 +123,7 @@ class AccessControlViewController extends Controller
 
 
         // Check if the record exists
-        if ($seisourcerecord) {
+        /* if ($seisourcerecord) {
             // Access the value of the 'year' column
             $yearValue = $seisourcerecord->year;
             $genderValue = $seisourcerecord->gender_id;
@@ -182,6 +183,14 @@ class AccessControlViewController extends Controller
                     // Handle other database-related exceptions
                 }
             }
-        }
+        } */
+    }
+
+    public function scholar_information(Request $request, $id)
+    {
+        $seisourcerecord = Sei::find($id);
+        $scholarrequirements = Scholar_requirements::where('scholar_id', $id)->first();
+
+        return view('scholar_information', compact('seisourcerecord', 'scholarrequirements'));
     }
 }

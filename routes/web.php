@@ -73,6 +73,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/accesscontrolterminated', [\App\Http\Controllers\AccessControlViewController::class, 'accesscontrolterminatedview'])->name('accesscontrolterminated');
     Route::get('/enrollscholartoongoing/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'enrollscholartoongoing'])->name('enrollscholartoongoing');
 
+    //SCHOLAR FULL INFORMATION
+    Route::get('/scholar_information/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'scholar_information'])->name('scholar_information');
 
     //ONGOINGLIST
     Route::get('/ongoinglist', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglist'])->name('ongoinglist');
