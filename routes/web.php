@@ -77,6 +77,8 @@ Route::middleware(['auth', 'role:staff'])->group(function () {
     Route::get('/scholar_information/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'scholar_information'])->name('scholar_information');
     //SCHOLAR FIRST REQUIREMENTS VIEW
     Route::get('/requirements_view/{id}', [\App\Http\Controllers\AccessControlViewController::class, 'requirements_view'])->name('requirements_view');
+    //SCHOLAR PROCESS ENDORSE OR VERIFY
+    Route::post('/scholarverifyendorse', [\App\Http\Controllers\AccessControlViewController::class, 'scholarverifyendorse'])->name('scholarverifyendorse');
     //ONGOINGLIST
     Route::get('/ongoinglist', [\App\Http\Controllers\RsmsViewController::class, 'ongoinglist'])->name('ongoinglist');
     Route::get('dashboard', [DashboardController::class, 'dashboardview'])->name('dashboard');

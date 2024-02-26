@@ -4,6 +4,7 @@
     <head>
         <title>DOST XI</title>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>{{-- SWEETALERT --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="icon" href="\icons\DOSTLOGOsmall.png" type="image/x-icon" />
         <link href="{{ asset('css/all.css') }}">
@@ -74,6 +75,16 @@
                                         </span>
                                     </div>
                                 @elseif ($replyStatusId == 2)
+                                    <script>
+                                        Swal.fire({
+                                            title: 'Hello Scholar!',
+                                            text: 'Please submit your requirements to continue to your dashboard',
+                                            icon: 'info',
+                                            width: '500px', // Set the width of the dialog box
+                                            height: '100px', // Set the width of the dialog box
+                                            confirmButtonText: 'Okay',
+                                        })
+                                    </script>
                                     <form method="POST" id="submit-form" action="{{ route('savefirstrequirements') }}" enctype="multipart/form-data">
                                         @csrf
                                         <input hidden name="scholarid" value="{{ auth()->user()->scholar_id }}">
@@ -173,10 +184,11 @@
                                             <h5 class="card-title mb-0">Reply Slip</h5>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">We are thrilled to offer you the <strong>DOST-SEI S&T Undergraduate
-                                                    Scholarship</strong> for the academic year <strong>{{ now()->year }}</strong>. As a
-                                                scholarship recipient, we kindly request your prompt response by signing and returning this
-                                                reply slip to confirm your acceptance of the award.</p>
+                                            <p class="card-text">We are thrilled to offer you the
+                                                <strong>DOST-SEI S&T Undergraduate Scholarship</strong> for the academic year <strong>{{ now()->year }}</strong>.
+                                                As a scholarship recipient, we kindly request your prompt response by signing and returning this
+                                                reply slip to confirm your acceptance of the award.
+                                            </p>
                                             @if ($replyslipstatus != 1)
                                                 <a href="{{ route('student.replyslipview') }}" class="btn btn-primary">View <i class="align-middle me-2" data-feather="eye"></i></a>
                                             @else

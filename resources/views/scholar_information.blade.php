@@ -5,6 +5,10 @@
         <title>DOST XI</title>
         <link href="{{ asset('css/all.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>{{-- SWEETALERT --}}
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
         <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.css" rel="stylesheet">
         <style>
             body,
@@ -113,6 +117,29 @@
                                                 @endif
                                             </tr>
                                         </table>
+                                        @if (session('success'))
+                                            <script>
+                                                Swal.fire({
+                                                    title: 'Error!',
+                                                    text: 'Do you want to continue',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'Cool'
+                                                })
+                                            </script>
+                                        @endif
+                                        <form id="formverify" method="POST" action="{{ route('scholarverifyendorse') }}">
+                                            @csrf
+                                            <input type="hidden" name="namescholar_id" value="{{ $seisourcerecord->id }}">
+                                            <input type="hidden" name="nameprocess" id="scholarprocess" value="">
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <button type="submit" class="btn btn-success" onclick="submitFormverify('verify');">Verify</button><span style="padding: 5px;"></span>
+                                                </div>
+                                                <div class="col-4">
+                                                    <button type="submit" class="btn btn-primary" onclick="submitFormverify('endorse');">Endorse to other region</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +156,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe id="ifrm" frameborder="0" scrolling="no" height="100%" width="100%" type="application/pdf" title="blankdashboard"></iframe>
+                                    <embed id="ifrm" src="#" type="application/pdf" width="100%" height="600px">
+                                    {{--  <iframe id="ifrm" frameborder="0" scrolling="no" height="100%" width="100%" type="application/pdf" title="blankdashboard"></iframe> --}}
                                 </div>
                                 {{--  <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -144,10 +172,16 @@
         </div>
     </body>
     <script src="{{ asset('js/all.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
     <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/date-1.5.1/fc-4.3.0/fh-3.4.0/r-2.5.0/sc-2.3.0/sp-2.2.0/sl-1.7.0/datatables.min.js"></script>
     <script>
+        function submitFormverify(action) {
+            document.getElementById('scholarprocess').value = action;
+            document.getElementById('formverify').submit();
+        }
         document.addEventListener('DOMContentLoaded', function() {
+
+
 
             $('#viewRequirementsModal').on('hidden.bs.modal', function() {
                 /*  console.log('Modal is hidden'); */

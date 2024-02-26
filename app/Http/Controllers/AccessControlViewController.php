@@ -194,6 +194,24 @@ class AccessControlViewController extends Controller
         return view('scholar_information', compact('seisourcerecord', 'scholarrequirements'));
     }
 
+    public function scholarverifyendorse(Request $request)
+    {
+        $scholar_id = $request->input('namescholar_id');
+        $ifscholar_id = Sei::find($scholar_id);
+
+        if ($request->input("nameprocess") == "verify") {
+            $ifscholarstatusupdate  =  $ifscholar_id->update(['scholar_status_id' => 6]);
+            if ($ifscholarstatusupdate) {
+                session()->flas('success', 'The Scholar can now access the system!');
+                return redirect()->back();
+            } else {
+            }
+        } else {
+        }
+
+        /*  return redirect()->back(); */
+    }
+
     public function requirements_view(Request $request, $id)
     {
         $scholarrequirements = Scholar_requirements::where('scholar_id', $id)->first();
